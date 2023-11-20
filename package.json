@@ -1,6 +1,6 @@
 {
   "name": "nrush",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "A speedy way to get your node project up to date, and probably break things.",
   "scripts": {
     "postinstall": "node npm/install.js"
