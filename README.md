@@ -36,3 +36,4 @@ Please do. I don't really do Rust that often, and all of this was done in 30 min
 # Notes
 - nrush is short for npm rush, as in "please get me up to date, I want the bleeding edge stuff and I love suffering"
 - this completely ignores version ranges set in your `package.json`. Watch out.
+- couldn't get this to build on Mac. I'll fix it eventually.
