@@ -1,6 +1,6 @@
 [package]
 name = "nrush"
-version = "0.1.1"
+version = "0.1.5"
 edition = "2021"
 description = "A speedy way to get your node project up to date, and probably break things."
 
@@ -12,3 +12,6 @@ description = "A speedy way to get your node project up to date, and probably br
 "reqwest" ={ version = "0.11.22", features = ["blocking", "json"] }
 "futures" = "0.3.29"
 "semver"= "1.0.20"
+"dialoguer" = "0.11.0"
+"indicatif" = "0.17.7"
+rand = "0.8.5"

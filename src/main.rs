@@ -1,9 +1,11 @@
 use serde_json::Value;
 use reqwest;
-use std::path::{Path, PathBuf};
+use std::path::{PathBuf};
 use std::io;
 use semver::Version;
 use tokio;
+use dialoguer;
+use indicatif;
 
 // Function to fetch package version asynchronously
 async fn fetch_package_version(package: String) -> Result<(String, String), reqwest::Error> {
@@ -19,39 +21,6 @@ fn normalize_version(version: &str) -> String {
 	version.chars().filter(|&c| c.is_ascii_digit() || c == '.').collect()
 }
 
-// Function to get package manager. Choices: npm, yarn, pnpm, bun
-fn get_package_manager() -> String {
-	let yarn_lock_exists = Path::new("yarn.lock").exists();
-	let pnpm_lock_exists = Path::new("pnpm-lock.yaml").exists();
-	let bun_lock_exists = Path::new("bun.lock").exists();
-
-	if yarn_lock_exists {
-		return "yarn".to_string();
-	} else if pnpm_lock_exists {
-		return "pnpm".to_string();
-	} else if bun_lock_exists {
-		return "bun".to_string();
-	} else {
-		return "npm".to_string();
-	}
-}
-
-fn prompt_install() {
-	let package_manager = get_package_manager();
-	println!("Would you like to run {} install?", package_manager);
-	let mut user_input = String::new();
-	io::stdin().read_line(&mut user_input).expect("Failed to read user input");
-	if ["y", "Y", ""].contains(&user_input.trim()) {
-		let mut command = std::process::Command::new(package_manager);
-		command.arg("install");
-		let output = command.output().expect("Failed to execute command");
-		println!("{}", String::from_utf8_lossy(&output.stdout));
-	} else {
-		println!("Aborted.");
-	}
-
-}
-
 #[tokio::main]
 async fn main() {
 	let path = PathBuf::from("package.json");
@@ -61,6 +30,7 @@ async fn main() {
 
 	// benchmarking
 	let current_time = std::time::Instant::now();
+
 
 	let file_content = match std::fs::read_to_string(&path) {
 		Ok(content) => content,
@@ -82,12 +52,14 @@ async fn main() {
 		.map(|x| x.to_string())
 		.collect();
 
-	let dev_package_names: Vec<String> = json_data["devDependencies"]
-		.as_object()
-		.unwrap()
-		.keys()
-		.map(|x| x.to_string())
-		.collect();
+	let dev_package_names: Vec<String> = match json_data["devDependencies"].as_object() {
+		Some(obj) => obj.keys().map(|x| x.to_string()).collect(),
+		None => {
+			// Handle the case when "devDependencies" is not an object or is None
+			Vec::new() // Or any default value or error handling logic
+		}
+	};
+
 
 	let mut tasks = package_names
 		.iter()
@@ -103,20 +75,51 @@ async fn main() {
 			.collect::<Vec<_>>());
 	}
 
-	let results = futures::future::join_all(tasks).await;
+
+	let results = indicatif::ProgressBar::new(tasks.len() as u64);
+	println!("Checking {} packages for updates...", tasks.len());
+
+	let time_elapsed = std::time::Instant::now();
+	let results = futures::future::join_all(tasks.into_iter().map(|task| {
+		let results = results.clone();
+		async move {
+			let result = task.await;
+			results.inc(1);
+			result
+		}
+	})).await;
+
+	print!("\x1B[2J\x1B[1;1H");
+	println!("Finished checking {} packages in {}ms.", results.len(), time_elapsed.elapsed().as_millis());
+
 	let mut to_update = vec![];
+
+	let get_current_package_version = |package: &str, json_data: &Value| -> String {
+		// Use cloned json_data to avoid borrowing conflicts
+		let is_dev = dev_package_names.contains(&package.to_string());
+		if is_dev {
+			json_data["devDependencies"][package].as_str().unwrap_or("Version not found").to_string()
+		} else {
+			json_data["dependencies"][package].as_str().unwrap_or("Version not found").to_string()
+		}
+	};
+
+	let set_new_package_version = |package: &str, version: &str, is_dev: bool, json_data: &mut Value| {
+		// Use cloned json_data to avoid borrowing conflicts
+		if is_dev {
+			json_data["devDependencies"][package] = Value::String(version.to_string());
+		} else {
+			json_data["dependencies"][package] = Value::String(version.to_string());
+		}
+	};
 
 	for result in results {
 		match result {
 			Ok((package, version)) => {
 				let is_dev = dev_package_names.contains(&package);
-				let current_version = if is_dev {
-					json_data["devDependencies"][&package].as_str().unwrap_or("Version not found")
-				} else {
-					json_data["dependencies"][&package].as_str().unwrap_or("Version not found")
-				};
+				let current_version = get_current_package_version(&package, &json_data);
 
-				let semver_current_version = Version::parse(&normalize_version(current_version));
+				let semver_current_version = Version::parse(&normalize_version(&current_version));
 				let semver_latest_version = Version::parse(&normalize_version(&version));
 
 				if let (Ok(curr_ver), Ok(latest_ver)) = (semver_current_version, semver_latest_version) {
@@ -136,16 +139,6 @@ async fn main() {
 		return;
 	}
 
-	println!("Packages to update:");
-	for &(ref package, ref version, ref is_dev) in &to_update {
-		let current_version = if *is_dev {
-			json_data["devDependencies"][&package].as_str().unwrap_or("Version not found")
-		} else {
-			json_data["dependencies"][&package].as_str().unwrap_or("Version not found")
-		};
-		println!("{}: {} -> {}", package, current_version, version);
-	}
-
 	let is_interactive = args.contains(&"-i".to_string()) || args.contains(&"--interactive".to_string());
 	let mut is_update = args.contains(&"-u".to_string()) || args.contains(&"--update".to_string());
 
@@ -155,16 +148,11 @@ async fn main() {
 		io::stdin().read_line(&mut user_input).expect("Failed to read user input");
         if ["y", "Y", ""].contains(&user_input.trim()) {
 			for &(ref package, ref version, ref is_dev) in &to_update {
-				if *is_dev {
-					json_data["devDependencies"][package] = Value::String(version.clone());
-				} else {
-					json_data["dependencies"][package] = Value::String(version.clone());
-				}
+				set_new_package_version(&package, &version, *is_dev, &mut json_data);
 			}
 			let new_json = serde_json::to_string_pretty(&json_data).unwrap();
 			std::fs::write(&path, new_json).expect("Unable to write file");
 	        println!("Updated {} packages.", to_update.len());
-	        // prompt_install();
         } else {
 	        println!("Aborted.");
         }
@@ -177,8 +165,29 @@ async fn main() {
 	}
 
 	if is_interactive {
-		println!("Interactive mode not implemented yet");
+		let mut selected = vec![];
+		let mut items = vec![];
+		for &(ref package, ref version, ref _is_dev) in &to_update {
+			let current_version = get_current_package_version(&package, &json_data);
+			items.push(format!("{}: {} -> {}", package, current_version, version));
+		}
+		let selections = dialoguer::MultiSelect::new()
+			.items(&items)
+			.interact()
+			.expect("Failed to read user input");
+		for selection in selections {
+			selected.push(selection);
+		}
+		for (i, &(ref package, ref version, ref is_dev)) in to_update.iter().enumerate() {
+			if selected.contains(&i) {
+				set_new_package_version(&package, &version, *is_dev, &mut json_data);
+			}
+		}
+		let new_json = serde_json::to_string_pretty(&json_data).unwrap();
+		std::fs::write(&path, new_json).expect("Unable to write file");
+		println!("Updated {} package(s)", selected.len());
 		return;
+
 	}
 	if is_update {
 		for &(ref package, ref version, is_dev) in &to_update {
@@ -191,9 +200,7 @@ async fn main() {
 		let new_json = serde_json::to_string_pretty(&json_data).unwrap();
 		std::fs::write(&path, new_json).expect("Unable to write file");
 		println!("Updated {} package(s) in {}ms.", to_update.len(), current_time.elapsed().as_millis());
-		// prompt_install();
 		return;
 	}
 
 }
-
