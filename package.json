@@ -1,20 +1,22 @@
 {
-  "name": "nrush",
-  "version": "0.1.6",
-  "description": "A speedy way to get your node project up to date, and probably break things.",
-  "scripts": {
-    "postinstall": "node npm/install.js"
-  },
-  "keywords": [],
   "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "binary-install": "^1.1.0"
-  },
   "bin": {
     "nrush": "./npm/run.js"
   },
+  "dependencies": {
+    "binary-install": "^1.0.0",
+    "next": "12.0.0",
+    "tailwindcss": "3.3.4"
+  },
+  "description": "A speedy way to get your node project up to date, and probably break things.",
   "files": [
     "npm/**/*"
-  ]
+  ],
+  "keywords": [],
+  "license": "ISC",
+  "name": "nrush",
+  "scripts": {
+    "postinstall": "node npm/install.js"
+  },
+  "version": "0.1.7"
 }

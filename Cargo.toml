@@ -1,6 +1,6 @@
 [package]
 name = "nrush"
-version = "0.1.6"
+version = "0.1.7"
 edition = "2021"
 description = "A speedy way to get your node project up to date, and probably break things."
 
@@ -14,4 +14,5 @@ description = "A speedy way to get your node project up to date, and probably br
 "semver"= "1.0.20"
 "dialoguer" = "0.11.0"
 "indicatif" = "0.17.7"
-rand = "0.8.5"
+"rand" = "0.8.5"
+"crossterm" = "0.22.1"
