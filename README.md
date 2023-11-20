@@ -1,6 +1,6 @@
 # nrush 🦀
 
-> A super fast way to update all packages in a Node/Bun project. Less featured, less tested, and less reliable alternative to npm-check-updates, but hey, it's blazingly fast 🔥
+> A super fast way to update all packages in a Node/Bun project. (probably) less featured, less tested, and less reliable alternative to npm-check-updates, but hey, it's blazingly fast 🔥
 
 ## Usage
 
