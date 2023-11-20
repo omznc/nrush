@@ -1,3 +1,9 @@
+<center>
+  
+![nrush](https://github.com/omznc/nrush/assets/38432561/f72ec033-9563-41d5-9a86-5f20038a32b1)
+
+</center>
+
 # nrush 🦀
 
 > A super fast way to update all packages in a Node/Bun project. (probably) less featured, less tested, and less reliable alternative to npm-check-updates, but hey, it's blazingly fast 🔥
