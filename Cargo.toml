@@ -2,6 +2,7 @@
 name = "nrush"
 version = "0.1.0"
 edition = "2021"
+description = "A speedy way to get your node project up to date, and probably break things."
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 

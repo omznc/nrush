@@ -1,0 +1,25 @@
+{
+  "name": "nrush",
+  "version": "0.1.0",
+  "description": "A speedy way to get your node project up to date, and probably break things.",
+  "main": "start.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "node ./pre-install.js",
+    "uninstall": "node ./uninstall.js"
+  },
+  "keywords": [],
+  
+  "license": "ISC",
+  "files": [
+    "pre-install.js",
+    "start.js",
+    "uninstall.js",
+    "README.md",
+    "LICENSE"
+  ]
+}
+    
