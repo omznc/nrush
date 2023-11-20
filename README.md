@@ -1,6 +1,6 @@
 <center>
   
-![nrush](https://github.com/omznc/nrush/assets/38432561/f72ec033-9563-41d5-9a86-5f20038a32b1)
+![nrush](https://github.com/omznc/nrush/assets/38432561/ad2f9d0c-477a-420a-aa34-7c171fe8a0a8)
 
 </center>
 
