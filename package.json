@@ -4,9 +4,7 @@
     "nrush": "./npm/run.js"
   },
   "dependencies": {
-    "binary-install": "^1.0.0",
-    "next": "12.0.0",
-    "tailwindcss": "3.3.4"
+    "binary-install": "^1.1.0"
   },
   "description": "A speedy way to get your node project up to date, and probably break things.",
   "files": [
@@ -18,5 +16,5 @@
   "scripts": {
     "postinstall": "node npm/install.js"
   },
-  "version": "0.1.7"
+  "version": "0.1.8"
 }
