@@ -16,9 +16,10 @@ npx nrush
 
 Arguments:
   - `-u` / `--update` - Updates all dependencies without any further user interaction.
-  - `-i` / `--interactive` - Will default to this if both `-u` and `-i` are supplied. Work in progress, does nothing right now. 
+  - `-i` / `--interactive` - Pick and choose which packages, if any, to update. Will default to this if both `-u` and `-i` are supplied. 
   - `-d` / `--dev` - Updates devDependencies as well. Can be combined with the above.
 
+Running without any arguments will show you a list of packages that can be updated, and will ask you to update every single one of them.
 
 ## Purpose 
 I made this as a personal alternative to `npm-check-updates`, mostly as a challenge to write a less feature-packed, faster version that checks the packages concurrently, resulting in 🔥speed🔥.
