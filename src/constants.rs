@@ -2,6 +2,7 @@
 pub const MAJOR: &str = "\x1b[31m";
 pub const MINOR: &str = "\x1b[33m";
 pub const PATCH: &str = "\x1b[32m";
+pub const RESET: &str = "\x1b[0m";
 
 // Other colors
 pub const GRAY: &str = "\x1b[90m";

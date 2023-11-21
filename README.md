@@ -6,7 +6,7 @@
 
 # nrush 🦀
 
-> A super fast way to update all packages in a Node/Bun project. (probably) less featured, less tested, and less
+> A speedy way to update all packages in a Node/Bun project. (probably) less featured, less tested, and less
 > reliable alternative to npm-check-updates, but hey, it's blazingly fast 🔥
 
 ## Usage
@@ -23,30 +23,40 @@ Node
 npx nrush@latest
 ```
 
+**Commands:**
 
-Commands:
-- `nrush about` - Show information about nrush.
-- `nrush help` - Show a manual on how to use nrush. Basically this.
+- `nrush about` - Display comprehensive information about NRush.
+- `nrush help` - Provide a usage guide for NRush. Primarily, this section.
 
-Arguments (only apply if no commands are supplied, only `nrush`):
-- `-u` / `--update` - Updates all dependencies without any further user interaction.
-- `-i` / `--interactive` - Pick and choose which packages, if any, to update. Will default to this if both `-u` and `-i`
-  are supplied.
-- `--include <dev,peer>` - Include dev and/or peer dependencies in the update process. Defaults to nothing, but you can
-  add `dev` and/or `peer` to include them, comma separated.
-- `-p <path>` / `--path <path>` - Specify a path to a package.json file. Defaults to the current directory.
-- `--skip-ranges` - Skip version ranges in package.json. Defaults to `false`, and keeps them.
-	- `^1.0.0` will be updated to `2.0.0` if `--skip-ranges` is supplied.
-	- (default) `^1.0.0` will be updated to `^2.0.0` if `--skip-ranges` is **not** supplied.
-- `--update-any` - Update `*` versions in package.json. Defaults to `false`, and keeps them.
-	- `*` will be updated to `^2.0.0` if `--update-any` is supplied.
-	- (default) `*` will not be touched if `--update-any` is **not** supplied.
-- `-s <semver>` / `--semver <semver>` - Specify a maximum semver range to update to. Choose 1
-  between `major`, `minor`, `patch`. Defaults to `major`.
-	- Currently does nothing, but will be implemented soon.
+**Arguments:**
+(Arguments are applicable only if no commands are supplied and only `nrush` is executed.)
 
-Running `nrush` without any arguments or commands will show you a list of packages that can be updated.
+1. Update Options (`-u` / `--update`):
+	- Automatically updates all dependencies without user interaction.
 
+2. Interactive Mode (`-i` / `--interactive`)
+	- User can select which packages to update. Defaults to this if both `-u` and `-i` are supplied.
+
+3. Include (`--include <dev,peer>`):
+	- Include `dev` and/or `peer` dependencies in the update process. Default is none, but can be modified to
+	  include `dev` and/or `peer`, separated by commas.
+
+4. Path Specification (`-p <path>` / `--path <path>`):
+	- Specify the path to a `package.json` file. The default is the current directory.
+
+5. Skip Ranges in Versioning (`--skip-ranges`):
+	- Skips version ranges in package.json. Default is `false`, preserving them.
+	- Example: `^1.0.0` will be updated to `2.0.0` if `--skip-ranges` is supplied.
+
+6. Update Any Version (`--update-any`):
+	- Updates `*` versions in package.json. Default is `false`, maintaining them.
+	- Example: `*` will be updated to `2.0.0` if `--update-any` is supplied.
+
+7. Semver Constraint (`-s <semver>` / `--semver <semver>`):
+	- Specify a maximum semver range to update to. Choose either `major`, `minor`, or `patch`. Default is `major`.
+    - This currently does nothing.
+
+By executing `nrush` without any arguments or commands, a list of updatable packages will be displayed, and you'll be prompted to install them._.
 
 ## Purpose
 

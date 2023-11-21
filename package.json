@@ -1,5 +1,11 @@
 {
-  "author": "Omar Zunic",
+  "author": "Omar Zunic <nrush@omarzunic.com> (https://omarzunic.com)",
+  "homepage": "https://github.com/omznc/nrush#readme",
+  "repository": "github:omznc/nrush",
+  "bugs": {
+    "email": "nrush@omarzunic.com",
+    "url": "https://github.com/omznc/nrush/issues"
+  },
   "bin": {
     "nrush": "./npm/run.js"
   },
@@ -10,11 +16,11 @@
   "files": [
     "npm/**/*"
   ],
-  "keywords": [],
+  "keywords": ["node", "bun", "update", "package.json", "updates", "rust", "npm-check-updates"],
   "license": "ISC",
   "name": "nrush",
   "scripts": {
     "postinstall": "node npm/install.js"
   },
-  "version": "0.1.8"
+  "version": "0.1.9"
 }
