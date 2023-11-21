@@ -53,9 +53,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Set the release version
+      - name: Set the release version (tag name)
         shell: bash
-        run: echo "RELEASE_VERSION=${GITHUB_REF:11}" >> $GITHUB_ENV
+        run: echo "RELEASE_VERSION=$GITHUB_REF_NAME" >> $GITHUB_ENV
 
       - name: Install OpenSSL
         run: sudo apt-get install pkg-config libssl-dev
