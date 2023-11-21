@@ -1,0 +1,62 @@
+{
+  "name": "nrush",
+  "version": "0.1.9",
+  "author": "Omar Zunic <nrush@omarzunic.com> (https://omarzunic.com)",
+  "homepage": "https://github.com/omznc/nrush#readme",
+  "repository": "github:omznc/nrush",
+  "bugs": {
+    "email": "nrush@omarzunic.com",
+    "url": "https://github.com/omznc/nrush/issues"
+  },
+  "bin": "lib/index.js",
+  "description": "A speedy way to get your node project up to date, and probably break things.",
+  "files": [
+    "npm/**/*"
+  ],
+  "keywords": [
+    "node",
+    "bun",
+    "update",
+    "package.json",
+    "updates",
+    "rust",
+    "npm-check-updates"
+  ],
+  "license": "ISC",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "build": "tsc",
+    "dev": "npm build && node lib/index.js"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.18",
+    "@typescript-eslint/eslint-plugin": "^5.48.0",
+    "@typescript-eslint/parser": "^5.48.0",
+    "eslint": "^8.31.0",
+    "typescript": "^4.9.4"
+  },
+  "optionalDependencies": {
+    "app-linux-x64": "0.1.0",
+    "app-linux-arm64": "0.1.0",
+    "app-darwin-x64": "0.1.0",
+    "app-darwin-arm64": "0.1.0",
+    "app-windows-x64": "0.1.0",
+    "app-windows-arm64": "0.1.0"
+  },
+  "eslintConfig": {
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+      "@typescript-eslint"
+    ],
+    "ignorePatterns": [
+      "lib/*"
+    ],
+    "root": true
+  }
+}

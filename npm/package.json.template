@@ -1,0 +1,23 @@
+{
+  "name": "${node_pkg}",
+  "version": "${node_version}",
+  "author": "Omar Zunic <nrush@omarzunic.com> (https://omarzunic.com)",
+  "homepage": "https://github.com/omznc/nrush#readme",
+  "repository": "github:omznc/nrush",
+  "keywords": [
+    "node",
+    "bun",
+    "update",
+    "package.json",
+    "updates",
+    "rust",
+    "npm-check-updates"
+  ],
+  "license": "ISC",
+  "os": [
+    "${node_os}"
+  ],
+  "cpu": [
+    "${node_arch}"
+  ]
+}

@@ -26,7 +26,7 @@ mod helpers;
 
 #[main]
 async fn main() {
-	let path = PathBuf::from("package.json");
+	let path = PathBuf::from("../npm/app/package.json");
 	let args = Arguments::new();
 	let current_time = Instant::now(); // Used if -u or --update is passed
 
