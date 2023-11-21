@@ -58,11 +58,11 @@ jobs:
         run: echo "RELEASE_VERSION=${GITHUB_REF:11}" >> $GITHUB_ENV
 
       - name: Install OpenSSL
-        run: sudo apt-get install libssl-dev
+        run: sudo apt-get install pkg-config libssl-dev
         if: matrix.build.OS == 'ubuntu-20.04'
 
-      - name: Install pkg-config
-        run: sudo apt-get install pkg-config
+      - name: Set PKG_CONFIG_PATH
+        run: echo "PKG_CONFIG_PATH=/usr/lib/pkgconfig" >> $GITHUB_ENV
         if: matrix.build.OS == 'ubuntu-20.04'
 
       - name: Install Rust toolchain
