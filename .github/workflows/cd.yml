@@ -61,10 +61,6 @@ jobs:
         run: sudo apt-get install pkg-config libssl-dev
         if: matrix.build.OS == 'ubuntu-20.04'
 
-      - name: Set PKG_CONFIG_PATH
-        run: echo "PKG_CONFIG_PATH=/usr/lib/pkgconfig" >> $GITHUB_ENV
-        if: matrix.build.OS == 'ubuntu-20.04'
-
       - name: Install Rust toolchain
         uses: actions-rs/toolchain@v1
         with:
