@@ -575,7 +575,7 @@ dependencies = [
 
 [[package]]
 name = "nrush"
-version = "0.1.9"
+version = "1.0.0"
 dependencies = [
  "crossterm",
  "dialoguer",
