@@ -114,7 +114,7 @@ jobs:
           cp "../target/${{ matrix.build.TARGET }}/release/${bin}" "${node_pkg}/bin"
           # publish the package
           cd "${node_pkg}"
-          npm publish --access public --dry-run
+          npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
@@ -129,7 +129,7 @@ jobs:
       - name: Install node
         uses: actions/setup-node@v3
         with:
-          node-version: "20"
+          node-version: "16"
           registry-url: "https://registry.npmjs.org"
 
       - name: Publish the package
@@ -139,6 +139,6 @@ jobs:
           cd npm/app
           npm install # requires optional dependencies to be present in the registry
           npm build
-          npm publish --access public --dry-run
+          npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -1,6 +1,6 @@
 [package]
 name = "nrush"
-version = "0.1.9"
+version = "1.0.0"
 edition = "2021"
 description = "A speedy way to get your node project up to date, and probably break things."
 
