@@ -1,6 +1,6 @@
 {
   "name": "nrush",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "author": "Omar Zunic <nrush@omarzunic.com> (https://omarzunic.com)",
   "homepage": "https://github.com/omznc/nrush#readme",
   "repository": "github:omznc/nrush",
@@ -38,12 +38,12 @@
     "typescript": "^4.9.4"
   },
   "optionalDependencies": {
-    "nrush-linux-x64": "1.0.3",
-    "nrush-linux-arm64": "1.0.3",
-    "nrush-darwin-x64": "1.0.3",
-    "nrush-darwin-arm64": "1.0.3",
-    "nrush-windows-x64": "1.0.3",
-    "nrush-windows-arm64": "1.0.3"
+    "nrush-linux-x64": "1.0.4",
+    "nrush-linux-arm64": "1.0.4",
+    "nrush-darwin-x64": "1.0.4",
+    "nrush-darwin-arm64": "1.0.4",
+    "nrush-windows-x64": "1.0.4",
+    "nrush-windows-arm64": "1.0.4"
   },
   "eslintConfig": {
     "extends": [
