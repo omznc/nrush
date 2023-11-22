@@ -56,12 +56,12 @@ async fn main() {
 
 	let mut json_data: Value = serde_json::from_str(&file_content).expect("Unable to parse JSON");
 
-	let package_names: Vec<String> = json_data["dependencies"]
-		.as_object()
-		.unwrap()
-		.keys()
-		.map(|x| x.to_string())
-		.collect();
+	let package_names: Vec<String> = match json_data["dependencies"].as_object() {
+		Some(obj) => obj.keys().map(|x| x.to_string()).collect(),
+		None => {
+			Vec::new() // Return empty vector if no dependencies are found
+		}
+	};
 
 	let mut dev_package_names: Vec<String> = Vec::new();
 	let mut peer_package_names: Vec<String> = Vec::new();
@@ -192,7 +192,6 @@ async fn main() {
 				type_str
 			));
 		}
-		items.sort_by(|a, b| package_ranking(a).cmp(&package_ranking(b)));
 		items
 	};
 
@@ -242,6 +241,8 @@ async fn main() {
 			)
 			.interact()
 			.expect("Failed to read user input");
+
+		// print selections
 
 		for selection in selections {
 			selected.push(selection);
