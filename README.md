@@ -14,13 +14,15 @@
 Bun
 
 ```
-bunx nrush@latest
+bun add -g nrush@latest
+nrush
 ```
 
 Node
 
 ```
-npx nrush@latest
+npm i -g nrush@latest
+nrush
 ```
 
 **Commands:**
