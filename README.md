@@ -40,8 +40,7 @@ nrush
 	- User can select which packages to update. Defaults to this if both `-u` and `-i` are supplied.
 
 3. Include (`--include <dev,peer>`):
-	- Include `dev` and/or `peer` dependencies in the update process. Default is none, but can be modified to
-	  include `dev` and/or `peer`, separated by commas.
+	- Include `dev` and/or `peer` dependencies in the update process.
 
 4. Path Specification (`-p <path>` / `--path <path>`):
 	- Specify the path to a `package.json` file. The default is the current directory.
@@ -58,7 +57,7 @@ nrush
 	- Specify a maximum semver range to update to. Choose either `major`, `minor`, or `patch`. Default is `major`.
     - This currently does nothing.
 
-By executing `nrush` without any arguments or commands, a list of updatable packages will be displayed, and you'll be prompted to install them._.
+By executing `nrush` without any arguments or commands, a list of updatable packages will be displayed, and you'll be prompted to install them.
 
 ## Purpose
 
@@ -77,10 +76,10 @@ Yes, that's more than 90% faster. Concurrency baby.
 Please do. I don't really do Rust that often, and all of this was done in 30 minutes.
 
 # Goals
+
 - full feature set from npm-check-updates
 
 # Notes
 
 - nrush is short for npm rush, as in "please get me up to date, I want the bleeding edge stuff and I love suffering"
 - this completely ignores version ranges set in your `package.json`. Watch out.
-- couldn't get this to build on Mac. I'll fix it eventually.
