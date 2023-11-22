@@ -192,7 +192,6 @@ async fn main() {
 				type_str
 			));
 		}
-		items.sort_by(|a, b| package_ranking(a).cmp(&package_ranking(b)));
 		items
 	};
 
@@ -242,6 +241,8 @@ async fn main() {
 			)
 			.interact()
 			.expect("Failed to read user input");
+
+		// print selections
 
 		for selection in selections {
 			selected.push(selection);
