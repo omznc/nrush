@@ -12,7 +12,6 @@ USAGE:
     nrush [command] or [options] # Can't use both at the same time
 COMMANDS:
     help        Prints help information
-    author      Prints author information
     source      Prints source code location
 OPTIONS:
     -u, --update            Update all packages
