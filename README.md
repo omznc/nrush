@@ -4,10 +4,16 @@
 
 </center>
 
-# nrush 🦀
+![npm](https://img.shields.io/npm/dw/nrush?style=for-the-badge&logo=npm)
+![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/omznc/nrush/cd.yml?style=for-the-badge&logo=github)
+
+
+# nrush 🦀 
 
 > A speedy way to update all packages in a Node/Bun project. (probably) less featured, less tested, and less
 > reliable alternative to npm-check-updates, but hey, it's blazingly fast 🔥
+
+
 
 ## Usage
 
