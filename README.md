@@ -4,8 +4,15 @@
 
 </center>
 
-![npm](https://img.shields.io/npm/dw/nrush?style=for-the-badge&logo=npm)
-![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/omznc/nrush/cd.yml?style=for-the-badge&logo=github)
+<div style="display: flex;">
+    <a href="https://www.npmjs.com/package/nrush">
+        <img src="https://img.shields.io/npm/dw/nrush?style=for-the-badge&logo=npm" alt="npm">
+    </a>
+    <img src="https://img.shields.io/github/actions/workflow/status/omznc/nrush/cd.yml?style=for-the-badge&logo=github" alt="GitHub">
+</div>
+
+
+
 
 
 # nrush 🦀 
