@@ -48,16 +48,36 @@ pub fn colorize_version(current_version: &str, latest_version: &str) -> String {
     let latest_version = Version::parse(&latest_version).unwrap();
 
     if current_version.major < latest_version.major {
-        format!("{}{}.{}.{} ({}){}", MAJOR, latest_version.major, latest_version.minor, latest_version.patch, "major", RESET)
+        format!(
+            "{}{}.{}.{} ({}){}",
+            MAJOR, latest_version.major, latest_version.minor, latest_version.patch, "major", RESET
+        )
     } else if current_version.minor < latest_version.minor {
-        format!("{}.{}{}.{} ({}){}", current_version.major, MINOR, latest_version.minor, latest_version.patch, "minor", RESET)
+        format!(
+            "{}.{}{}.{} ({}){}",
+            current_version.major,
+            MINOR,
+            latest_version.minor,
+            latest_version.patch,
+            "minor",
+            RESET
+        )
     } else if current_version.patch < latest_version.patch {
-        format!("{}.{}.{}{} ({}){}", current_version.major, current_version.minor, PATCH, latest_version.patch, "patch", RESET)
+        format!(
+            "{}.{}.{}{} ({}){}",
+            current_version.major,
+            current_version.minor,
+            PATCH,
+            latest_version.patch,
+            "patch",
+            RESET
+        )
     } else {
         latest_version.to_string()
     }
 }
 
+// Determine the package type
 pub fn package_type(is_dev: &bool, is_peer: &bool) -> &'static str {
     if *is_dev {
         "dev"
@@ -68,19 +88,17 @@ pub fn package_type(is_dev: &bool, is_peer: &bool) -> &'static str {
     }
 }
 
-pub fn package_ranking(package: &str) -> i32 {
-    if package.contains("(major)") { 1 }
-    else if package.contains("(minor)") { 2 }
-    else if package.contains("(patch)") { 3 }
-    else { 4 }
-}
-
-
-pub fn get_current_package_version(package: &str, json_data: &Value, dev_package_names: &Vec<String>, peer_package_names: &Vec<String>) -> String {
+// Function to get the current package version
+pub fn get_current_package_version(
+    package: &str,
+    json_data: &Value,
+    dev_package_names: &Vec<String>,
+    peer_package_names: &Vec<String>,
+) -> String {
     let get_version_from_dependency_type = |dependency_type: &str| {
         json_data[dependency_type][package]
             .as_str()
-            .unwrap_or("Version not found")
+            .unwrap_or("")
             .to_string()
     };
 
@@ -94,10 +112,22 @@ pub fn get_current_package_version(package: &str, json_data: &Value, dev_package
         }
     };
 
-    get_version_from_dependency_type(get_dependency_type(package))
+    let version = get_version_from_dependency_type(get_dependency_type(package));
+    if version.is_empty() {
+        "Version not found".to_string()
+    } else {
+        version
+    }
 }
 
-pub fn set_new_package_version(package: &str, version: &str, is_dev: bool, is_peer: bool, json_data: &mut Value) {
+// Function to set a new package version
+pub fn set_new_package_version(
+    package: &str,
+    version: &str,
+    is_dev: bool,
+    is_peer: bool,
+    json_data: &mut Value,
+) {
     let get_dependency_type = |is_dev: bool, is_peer: bool| {
         if is_dev {
             "devDependencies"
@@ -110,9 +140,13 @@ pub fn set_new_package_version(package: &str, version: &str, is_dev: bool, is_pe
 
     let dependency_type = get_dependency_type(is_dev, is_peer);
 
+    // Fetch the current package version; handle "Version not found"
     let current_version = get_current_package_version(&package, &json_data, &vec![], &vec![]);
-    let current_version_range = get_version_range(&current_version);
+    let current_version_range = if current_version == "Version not found" {
+        "".to_string()
+    } else {
+        get_version_range(&current_version)
+    };
     let new_version = format!("{}{}", current_version_range, version);
     json_data[dependency_type][package] = Value::String(new_version);
 }
-
