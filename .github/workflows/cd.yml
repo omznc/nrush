@@ -15,25 +15,25 @@ jobs:
         build:
           - {
             NAME: linux-x64-glibc,
-            OS: ubuntu-latest,
+            OS: ubuntu-20.04,
             TOOLCHAIN: stable,
             TARGET: x86_64-unknown-linux-gnu,
           }
           - {
             NAME: linux-arm64-glibc,
-            OS: ubuntu-latest,
+            OS: ubuntu-20.04,
             TOOLCHAIN: stable,
             TARGET: aarch64-unknown-linux-gnu,
           }
           - {
             NAME: win32-x64-msvc,
-            OS: windows-latest,
+            OS: windows-2022,
             TOOLCHAIN: stable,
             TARGET: x86_64-pc-windows-msvc,
           }
           - {
             NAME: win32-arm64-msvc,
-            OS: windows-latest,
+            OS: windows-2022,
             TOOLCHAIN: stable,
             TARGET: aarch64-pc-windows-msvc,
           }
