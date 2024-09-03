@@ -240,21 +240,19 @@ async fn main() {
 
     if args.interactive {
         let mut selected = vec![];
-        let items = generate_items(&to_update, &mut json_data);
+        let items = generate_items(&to_update, &json_data);
 
         let selections = MultiSelect::with_theme(&ColorfulTheme::default())
-			.with_prompt(format!("Select packages to update {}(space to select, enter to confirm, arrow keys to navigate, a to toggle all)\x1b[0m", GRAY.to_string()))
-			.items(&items)
-			.defaults(
-				(0..items.len())
-					.map(|_| true)
-					.collect::<Vec<_>>()
-					.as_slice(),
-			)
-			.interact()
-			.expect("Failed to read user input");
-
-        // print selections
+            .with_prompt(format!("Select packages to update {}(space to select, enter to confirm, arrow keys to navigate, a to toggle all)\x1b[0m", GRAY.to_string()))
+            .items(&items)
+            .defaults(
+                (0..items.len())
+                    .map(|_| true)
+                    .collect::<Vec<_>>()
+                    .as_slice(),
+            )
+            .interact()
+            .expect("Failed to read user input");
 
         for selection in selections {
             selected.push(selection);
