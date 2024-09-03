@@ -6,9 +6,9 @@
 
 <div style="display: flex;">
     <a href="https://www.npmjs.com/package/nrush">
-        <img src="https://img.shields.io/npm/dw/nrush?style=for-the-badge&logo=npm" alt="npm">
+        <img src="https://img.shields.io/npm/dw/nrush?style=for-the-badge&logo=npm" alt="npm"/>
     </a>
-    <img src="https://img.shields.io/github/actions/workflow/status/omznc/nrush/cd.yml?style=for-the-badge&logo=github" alt="GitHub">
+    <img src="https://img.shields.io/github/actions/workflow/status/omznc/nrush/cd.yml?style=for-the-badge&logo=github" alt="GitHub"/>
 </div>
 
 
@@ -82,8 +82,34 @@ Please do. I don't really do Rust that often, and all of this was done in 30 min
 
 # Goals
 
-- full feature set from npm-check-updates
+- Full feature set from npm-check-updates
+
+
+nrush
+
+
 
 # Notes
 
 - nrush is short for npm rush, as in "please get me up to date"
+- The base `omznc/nrush` package figures out your OS architecture and downloads the correct binary. It uses `child_process` which you could find alarming, but hey, that's what open-source is for. 
+	- If this is a concern, you can use any of the following commands to run `nrush`, depending on your OS:
+		```bash
+		# Linux
+		bunx nrush-linux-x64
+
+		# Linux (arm64)
+		bunx nrush-linux-arm64
+
+		# MacOS
+		bunx nrush-darwin-x64
+
+		# MacOS (arm64)
+		bunx nrush-darwin-arm64
+		
+		# Windows
+		bunx nrush-windows-x64
+
+		# Windows (arm64)
+		bunx nrush-windows-arm64
+		```
