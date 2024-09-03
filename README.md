@@ -93,23 +93,10 @@ nrush
 
 - nrush is short for npm rush, as in "please get me up to date"
 - The base `omznc/nrush` package figures out your OS architecture and downloads the correct binary. It uses `child_process` which you could find alarming, but hey, that's what open-source is for. 
-	- If this is a concern, you can use any of the following commands to run `nrush`, depending on your OS:
-		```bash
-		# Linux
-		bunx nrush-linux-x64
-
-		# Linux (arm64)
-		bunx nrush-linux-arm64
-
-		# MacOS
-		bunx nrush-darwin-x64
-
-		# MacOS (arm64)
-		bunx nrush-darwin-arm64
-		
-		# Windows
-		bunx nrush-windows-x64
-
-		# Windows (arm64)
-		bunx nrush-windows-arm64
-		```
+	- These are the underlying binaries:
+		- [nrush-windows-x64](https://www.npmjs.com/package/nrush-windows-x64)
+		- [nrush-windows-arm64](https://www.npmjs.com/package/nrush-windows-arm64)
+		- [nrush-darwin-x64](https://www.npmjs.com/package/nrush-darwin-x64)
+		- [nrush-darwin-arm64](https://www.npmjs.com/package/nrush-darwin-arm64)
+		- [nrush-linux-x64](https://www.npmjs.com/package/nrush-linux-x64)
+		- [nrush-linux-arm64](https://www.npmjs.com/package/nrush-linux-arm64)
