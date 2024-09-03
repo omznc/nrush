@@ -17,8 +17,7 @@
 
 # nrush 🦀 
 
-> A speedy way to update all packages in a Node/Bun project. (probably) less featured, less tested, and less
-> reliable alternative to npm-check-updates, but hey, it's blazingly fast 🔥
+> A speedy way to update all packages in a Node/Bun project, written in Rust.
 
 
 
@@ -27,15 +26,13 @@
 Bun
 
 ```
-bun add -g nrush@latest
-nrush
+bunx nrush
 ```
 
 Node
 
 ```
-npm i -g nrush@latest
-nrush
+npx nrush
 ```
 
 **Commands:**
@@ -66,7 +63,7 @@ nrush
 	- Updates `*` versions in package.json. Default is `false`, maintaining them.
 	- Example: `*` will be updated to `2.0.0` if `--update-any` is supplied.
 
-7. Semver Constraint (`-s <semver>` / `--semver <semver>`):
+7. SOON: Semver Constraint (`-s <semver>` / `--semver <semver>`):
 	- Specify a maximum semver range to update to. Choose either `major`, `minor`, or `patch`. Default is `major`.
     - This currently does nothing.
 
@@ -77,12 +74,7 @@ By executing `nrush` without any arguments or commands, a list of updatable pack
 I made this as a personal alternative to `npm-check-updates`, mostly as a challenge to write a less feature-packed,
 faster version that checks the packages concurrently, resulting in 🔥speed🔥.
 
-From my testing, here are the differences (same project, ~60 dependencies)
-
-- `bunx npm-check-updates -u` takes ~30 seconds
-- `bunx nrush -u` takes ~2 seconds
-
-Yes, that's more than 90% faster. Concurrency baby.
+Concurrency, baby.
 
 # Contributing
 
@@ -94,5 +86,4 @@ Please do. I don't really do Rust that often, and all of this was done in 30 min
 
 # Notes
 
-- nrush is short for npm rush, as in "please get me up to date, I want the bleeding edge stuff and I love suffering"
-- this completely ignores version ranges set in your `package.json`. Watch out.
+- nrush is short for npm rush, as in "please get me up to date"
