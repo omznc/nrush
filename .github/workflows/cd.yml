@@ -57,9 +57,9 @@ jobs:
         shell: bash
         run: echo "RELEASE_VERSION=$GITHUB_REF_NAME" >> $GITHUB_ENV
 
-      - name: Install OpenSSL
-        run: sudo apt-get install pkg-config libssl-dev
+      - name: Install dependencies
         if: matrix.build.OS == 'ubuntu-20.04'
+        run: sudo apt-get update && sudo apt-get install -y pkg-config libssl-dev
 
       - name: Install Rust toolchain
         uses: actions-rs/toolchain@v1
@@ -88,7 +88,6 @@ jobs:
           # set the binary name
           bin="nrush"
           # derive the OS and architecture from the build matrix name
-          # note: when split by a hyphen, first part is the OS and the second is the architecture
           node_os=$(echo "${{ matrix.build.NAME }}" | cut -d '-' -f1)
           export node_os
           node_arch=$(echo "${{ matrix.build.NAME }}" | cut -d '-' -f2)
@@ -96,7 +95,6 @@ jobs:
           # set the version
           export node_version="${{ env.RELEASE_VERSION }}"
           # set the package name
-          # note: use 'windows' as OS name instead of 'win32'
           if [ "${{ matrix.build.OS }}" = "windows-2022" ]; then
             export node_pkg="${bin}-windows-${node_arch}"
           else
@@ -107,7 +105,6 @@ jobs:
           # generate package.json from the template
           envsubst < package.json.template > "${node_pkg}/package.json"
           # copy the binary into the package
-          # note: windows binaries has '.exe' extension
           if [ "${{ matrix.build.OS }}" = "windows-2022" ]; then
             bin="${bin}.exe"
           fi
