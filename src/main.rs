@@ -12,7 +12,7 @@ use arguments::Include;
 use constants::{ABOUT, GRAY, HELP};
 
 use crate::arguments::{Arguments, Command};
-use crate::constants::RESET;
+use crate::constants::{DEPENDENCIES, DEV_DEPENDENCIES, PEER_DEPENDENCIES, RESET};
 use crate::helpers::prompt_confirm;
 use crate::packages::{get_current_package_version, package_type, set_new_package_version};
 use crate::progress::create_progress_bar;
@@ -73,7 +73,7 @@ async fn main() {
 
     if let Some(includes) = &args.include {
         if includes.contains(&Include::Dev) {
-            dev_package_names = match json_data["devDependencies"].as_object() {
+            dev_package_names = match json_data[DEV_DEPENDENCIES].as_object() {
                 Some(obj) => obj.keys().map(|x| x.to_string()).collect(),
                 None => {
                     Vec::new() // Return empty vector if no dev dependencies are found
@@ -90,7 +90,7 @@ async fn main() {
         }
 
         if includes.contains(&Include::Peer) {
-            peer_package_names = match json_data["peerDependencies"].as_object() {
+            peer_package_names = match json_data[PEER_DEPENDENCIES].as_object() {
                 Some(obj) => obj.keys().map(|x| x.to_string()).collect(),
                 None => {
                     Vec::new() // Return empty vector if no peer dependencies are found
@@ -278,15 +278,10 @@ async fn main() {
     }
 
     if args.update {
-        for &(ref package, ref version, is_dev, is_peer) in &to_update {
-            if is_dev {
-                json_data["devDependencies"][package] = Value::String(version.clone());
-            } else if is_peer {
-                json_data["peerDependencies"][package] = Value::String(version.clone());
-            } else {
-                json_data["dependencies"][package] = Value::String(version.clone());
-            }
-        }
+        update_dependencies(&mut json_data, DEPENDENCIES, &to_update);
+        update_dependencies(&mut json_data, DEV_DEPENDENCIES, &to_update);
+        update_dependencies(&mut json_data, PEER_DEPENDENCIES, &to_update);
+
         let new_json = serde_json::to_string_pretty(&json_data).unwrap();
         fs::write(&path, new_json).expect("Unable to write file");
         println!(
@@ -294,5 +289,23 @@ async fn main() {
             to_update.len(),
             current_time.elapsed().as_millis()
         );
+    }
+}
+
+fn update_dependencies(
+    json_data: &mut Value,
+    key: &str,
+    to_update: &[(String, String, bool, bool)],
+) {
+    if let Some(deps) = json_data.get_mut(key) {
+        for &(ref package, ref version, is_dev, is_peer) in to_update {
+            if (key == DEPENDENCIES && !is_dev && !is_peer)
+                || (key == DEV_DEPENDENCIES && is_dev)
+                || (key == PEER_DEPENDENCIES && is_peer)
+            {
+                deps[package] = Value::String(version.clone());
+            }
+        }
+
     }
 }

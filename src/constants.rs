@@ -30,3 +30,8 @@ AUTHOR:
 SOURCE:
     https://github.com/omznc/nrush
 ";
+
+// Constants for dependency keys
+pub const DEPENDENCIES: &str = "dependencies";
+pub const DEV_DEPENDENCIES: &str = "devDependencies";
+pub const PEER_DEPENDENCIES: &str = "peerDependencies";
