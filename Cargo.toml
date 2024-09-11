@@ -19,3 +19,4 @@ authors = ["Omar Zunic <nrush@omarzunic.com>"]
 "dialoguer" = "0.11.0"
 "indicatif" = "0.17.7"
 "crossterm" = "0.28.1"
+"openssl" = { version = "0.10.66", features = ["vendored"] }
